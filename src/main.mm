@@ -1,29 +1,14 @@
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
-#include <curl/curl.h>
+#import "AutoUpdate.h"
 
 int main() {
 
-    CURL *curl;
-    CURLcode res;
-    
-    curl = curl_easy_init();
-    if(curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, "https://www.google.com/");
-        res = curl_easy_perform(curl);
-    
-        if(CURLE_OK == res) {
-        char *ct;
-        /* ask for the content-type */ 
-        res = curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE, &ct);
-    
-        if((CURLE_OK == res) && ct)
-            printf("We received Content-Type: %s\n", ct);
-        }
-    
-        /* always cleanup */ 
-        curl_easy_cleanup(curl);
-    }
+    NSString *metadata_path = [[NSBundle mainBundle] pathForResource:@"metadata" ofType:@"json"];
+
+    AutoUpdate update{metadata_path};
+    std::cout << "latest version: " << update.latestVersion() << std::endl;
+    std::cout << "current version: " << update.currentVersion() << std::endl;
 
     @autoreleasepool {
         NSApp = [NSApplication sharedApplication];
@@ -36,7 +21,6 @@ int main() {
         [NSApp run];
     }
 
-  
     return 0;
 
 }
