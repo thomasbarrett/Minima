@@ -10,7 +10,7 @@
 
 class AutoUpdate {
 private:
-    std::string metadata_url_ = "https://thomasbarrett.github.io/Minima/metadata.json";
+    std::string metadata_url_ = "https://s3.amazonaws.com/com.thomasbarrett.minima/metadata.json";
     std::string metadata_path_;
 
     rapidjson::Document local_metadata_;

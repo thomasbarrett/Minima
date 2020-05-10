@@ -15,7 +15,7 @@ executable('minima', ['src/main.mm', 'src/ViewController.mm', 'src/AppDelegate.m
 install_data('src/launch.sh', install_dir : 'Contents/MacOS')
 
 install_data('minima.icns', install_dir : 'Contents/Resources')
-install_data('docs/metadata.json', install_dir : 'Contents/Resources')
+install_data('metadata.json', install_dir : 'Contents/Resources')
 install_data('Info.plist', install_dir : 'Contents')
 
 
