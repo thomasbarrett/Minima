@@ -18,10 +18,10 @@ def otool(s):
         yield l.strip().split()[0]
 
 def change_dependency_path(path, dep_old, dep_new):
-    subprocess.Popen(['/usr/bin/install_name_tool', '-change', dep_old, dep_new, path])
+    subprocess.Popen(['/usr/bin/install_name_tool', '-change', dep_old, dep_new, path]).wait()
 
 def change_id_name(path, id_new):
-    subprocess.Popen(['/usr/bin/install_name_tool', '-id', id_new, path])
+    subprocess.Popen(['/usr/bin/install_name_tool', '-id', id_new, path]).wait()
 
 def find_dependencies(path, deps = []):
     for dep_path in otool(path):
