@@ -6,6 +6,7 @@
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <future>
+#include <fstream>
 
 class AutoUpdate {
 private:

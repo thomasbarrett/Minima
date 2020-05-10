@@ -6,6 +6,9 @@
 #include <cairo-quartz.h>
 #include <cairo-ft.h>
 
+#import "AutoUpdate.h"
+#include <stdarg.h>
+
 #include <vector>
 #include <iostream>
 #include <string>
@@ -257,6 +260,22 @@
         self->cursor_index_ += str.size();
         self->cursor_start_index_ = self->cursor_index_;
 
+    } else if (([event modifierFlags] & NSCommandKeyMask) && keyChar == 'u') {
+
+        NSString *metadata_path = [[NSBundle mainBundle] pathForResource:@"metadata" ofType:@"json"];
+        AutoUpdate update{[metadata_path UTF8String]};
+        std::cout << "latest version: " << update.latestVersion() << std::endl;
+        std::cout << "current version: " << update.currentVersion() << std::endl;
+
+        NSString *executable_path = [[NSBundle mainBundle] executablePath];
+        NSString *launcher_path = [[executable_path stringByDeletingLastPathComponent] stringByAppendingPathComponent: @"launch.sh"];
+        
+        std::string command = std::string([launcher_path UTF8String]);
+        command += " " + std::to_string(getpid());
+        command += " " + std::string([[[NSBundle mainBundle] bundlePath] UTF8String]);
+        command += " " + std::string([[[NSBundle mainBundle] bundlePath] UTF8String]) + "/Contents/Resources/minima.app";
+        int status = system(command.c_str());
+
     } else if (0x0020 <= keyChar && keyChar <= 0x007F) {
 
         if (cursor_min_index != cursor_max_index) {
@@ -498,8 +517,7 @@
         cairo_fill(cr);
     }
 
-
-    cairo_set_source_rgba (cr, 0, 0, 0, 1.);
+    cairo_set_source_rgba (cr, 0, 0, 0, 1.);    
     cairo_rectangle(cr, cursor_x, cursor_y, 1, LINE_HEIGHT * FONT_SIZE);
     cairo_fill(cr);
 
@@ -518,8 +536,11 @@
     cairo_fill(cr);
     cairo_glyph_free (cairo_glyphs);
 
-    cairo_set_source_rgb(cr, 0, 0, 0);
-    cairo_set_line_width(cr, 1);
+    cairo_identity_matrix(cr);
+
+    cairo_set_source_rgba (cr, 0./255, 118./255, 197./255, 1.);
+    cairo_rectangle(cr, 0, height - LINE_HEIGHT * FONT_SIZE, width, LINE_HEIGHT * FONT_SIZE);
+    cairo_fill(cr);
 
     cairo_font_face_destroy (cairo_face);
     cairo_destroy (cr);
