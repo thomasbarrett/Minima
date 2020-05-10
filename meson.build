@@ -10,6 +10,7 @@ dep_freetype2 = dependency('freetype2')
 dep_harfbuzz = dependency('harfbuzz')
 dep_curl = dependency('libcurl')
 dep_rapidjson = dependency('rapidjson')
+dep_sfml = dependency('sfml')
 
 executable('minima', ['src/main.mm', 'src/ViewController.mm', 'src/AppDelegate.mm', 'src/CairoView.mm'], install : true, dependencies: [dep_main, dep_cario, dep_cario_ft, dep_freetype2, dep_harfbuzz, dep_curl, dep_rapidjson])
 install_data('src/launch.sh', install_dir : 'Contents/MacOS')
