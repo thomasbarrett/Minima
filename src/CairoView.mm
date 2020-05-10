@@ -517,8 +517,8 @@
 
     cairo_identity_matrix(cr);
 
-    // cairo_set_source_rgba (cr, 0./255, 118./255, 197./255, 1.);
-    cairo_set_source_rgba (cr, 230./255, 88./255, 83./255, 1.);
+     cairo_set_source_rgba (cr, 0./255, 118./255, 197./255, 1.);
+    //cairo_set_source_rgba (cr, 230./255, 88./255, 83./255, 1.);
 
     cairo_rectangle(cr, 0, height - LINE_HEIGHT * FONT_SIZE, width, LINE_HEIGHT * FONT_SIZE);
     cairo_fill(cr);
